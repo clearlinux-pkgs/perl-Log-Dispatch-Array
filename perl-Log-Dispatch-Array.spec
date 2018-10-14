@@ -4,31 +4,15 @@
 #
 Name     : perl-Log-Dispatch-Array
 Version  : 1.003
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblog-dispatch-array-perl/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
 Summary  : 'log events to an array (reference)'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-Log-Dispatch-Array-license
-Requires: perl-Log-Dispatch-Array-man
-Requires: perl(B::Hooks::EndOfScope)
-Requires: perl(Class::Data::Inheritable)
-Requires: perl(Exception::Class)
-Requires: perl(Log::Dispatch::Output)
-Requires: perl(Module::Implementation)
-Requires: perl(Module::Runtime)
-Requires: perl(Package::Stash)
-Requires: perl(Params::ValidationCompiler)
-Requires: perl(Specio::Exporter)
-Requires: perl(Sub::Exporter::Progressive)
-Requires: perl(Sub::Identify)
-Requires: perl(Test::Deep)
-Requires: perl(Try::Tiny)
-Requires: perl(Variable::Magic)
-Requires: perl(namespace::autoclean)
-Requires: perl(namespace::clean)
+Requires: perl-Log-Dispatch-Array-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 BuildRequires : perl(B::Hooks::EndOfScope)
 BuildRequires : perl(Class::Data::Inheritable)
 BuildRequires : perl(Exception::Class)
@@ -51,6 +35,15 @@ This archive contains the distribution Log-Dispatch-Array,
 version 1.003:
 log events to an array (reference)
 
+%package dev
+Summary: dev components for the perl-Log-Dispatch-Array package.
+Group: Development
+Provides: perl-Log-Dispatch-Array-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Log-Dispatch-Array package.
+
+
 %package license
 Summary: license components for the perl-Log-Dispatch-Array package.
 Group: Default
@@ -59,19 +52,11 @@ Group: Default
 license components for the perl-Log-Dispatch-Array package.
 
 
-%package man
-Summary: man components for the perl-Log-Dispatch-Array package.
-Group: Default
-
-%description man
-man components for the perl-Log-Dispatch-Array package.
-
-
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Log-Dispatch-Array-1.003
-mkdir -p %{_topdir}/BUILD/Log-Dispatch-Array-1.003/deblicense/
+cd ..
+%setup -q -T -D -n Log-Dispatch-Array-1.003 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Log-Dispatch-Array-1.003/deblicense/
 
 %build
@@ -96,12 +81,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-Log-Dispatch-Array
-cp LICENSE %{buildroot}/usr/share/doc/perl-Log-Dispatch-Array/LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array
+cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/LICENSE
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -110,12 +95,12 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Log/Dispatch/Array.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Log/Dispatch/Array.pm
 
-%files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-Log-Dispatch-Array/LICENSE
-
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Log::Dispatch::Array.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Log-Dispatch-Array/LICENSE
