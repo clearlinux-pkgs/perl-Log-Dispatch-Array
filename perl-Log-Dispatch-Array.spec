@@ -4,7 +4,7 @@
 #
 Name     : perl-Log-Dispatch-Array
 Version  : 1.003
-Release  : 4
+Release  : 5
 URL      : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblog-dispatch-array-perl/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
@@ -15,12 +15,16 @@ Requires: perl-Log-Dispatch-Array-license = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(B::Hooks::EndOfScope)
 BuildRequires : perl(Class::Data::Inheritable)
+BuildRequires : perl(Devel::StackTrace)
+BuildRequires : perl(Eval::Closure)
 BuildRequires : perl(Exception::Class)
 BuildRequires : perl(Log::Dispatch::Output)
+BuildRequires : perl(MRO::Compat)
 BuildRequires : perl(Module::Implementation)
 BuildRequires : perl(Module::Runtime)
 BuildRequires : perl(Package::Stash)
 BuildRequires : perl(Params::ValidationCompiler)
+BuildRequires : perl(Role::Tiny)
 BuildRequires : perl(Specio::Exporter)
 BuildRequires : perl(Sub::Exporter::Progressive)
 BuildRequires : perl(Sub::Identify)
