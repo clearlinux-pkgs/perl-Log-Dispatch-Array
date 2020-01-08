@@ -4,14 +4,15 @@
 #
 Name     : perl-Log-Dispatch-Array
 Version  : 1.003
-Release  : 14
+Release  : 15
 URL      : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblog-dispatch-array-perl/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
-Summary  : log events to an array (reference)
+Summary  : 'log events to an array (reference)'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-Log-Dispatch-Array-license = %{version}-%{release}
+Requires: perl-Log-Dispatch-Array-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(B::Hooks::EndOfScope)
 BuildRequires : perl(Class::Data::Inheritable)
@@ -57,18 +58,28 @@ Group: Default
 license components for the perl-Log-Dispatch-Array package.
 
 
+%package perl
+Summary: perl components for the perl-Log-Dispatch-Array package.
+Group: Default
+Requires: perl-Log-Dispatch-Array = %{version}-%{release}
+
+%description perl
+perl components for the perl-Log-Dispatch-Array package.
+
+
 %prep
 %setup -q -n Log-Dispatch-Array-1.003
-cd ..
-%setup -q -T -D -n Log-Dispatch-Array-1.003 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
+cd %{_builddir}/Log-Dispatch-Array-1.003
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Log-Dispatch-Array-1.003/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Log-Dispatch-Array-1.003/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -78,7 +89,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -87,8 +98,8 @@ make TEST_VERBOSE=1 test || :
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array
-cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/LICENSE
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/deblicense_copyright
+cp %{_builddir}/Log-Dispatch-Array-1.003/LICENSE %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/5534c6bbbfd86787763de9db5162d73674e94d26
+cp %{_builddir}/Log-Dispatch-Array-1.003/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/ae2702ce93f23396e87f2f13ccbc1c69d37903c2
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -101,7 +112,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Log/Dispatch/Array.pm
 
 %files dev
 %defattr(-,root,root,-)
@@ -109,5 +119,9 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Log-Dispatch-Array/LICENSE
-/usr/share/package-licenses/perl-Log-Dispatch-Array/deblicense_copyright
+/usr/share/package-licenses/perl-Log-Dispatch-Array/5534c6bbbfd86787763de9db5162d73674e94d26
+/usr/share/package-licenses/perl-Log-Dispatch-Array/ae2702ce93f23396e87f2f13ccbc1c69d37903c2
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Log/Dispatch/Array.pm
