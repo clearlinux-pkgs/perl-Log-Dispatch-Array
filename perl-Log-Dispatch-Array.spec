@@ -4,7 +4,7 @@
 #
 Name     : perl-Log-Dispatch-Array
 Version  : 1.003
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblog-dispatch-array-perl/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
@@ -99,7 +99,7 @@ make TEST_VERBOSE=1 test || :
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array
 cp %{_builddir}/Log-Dispatch-Array-1.003/LICENSE %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/5534c6bbbfd86787763de9db5162d73674e94d26
-cp %{_builddir}/Log-Dispatch-Array-1.003/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/ae2702ce93f23396e87f2f13ccbc1c69d37903c2
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-Log-Dispatch-Array/ae2702ce93f23396e87f2f13ccbc1c69d37903c2
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -124,4 +124,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/Log/Dispatch/Array.pm
+/usr/lib/perl5/vendor_perl/5.30.2/Log/Dispatch/Array.pm
