@@ -4,7 +4,7 @@
 #
 Name     : perl-Log-Dispatch-Array
 Version  : 1.003
-Release  : 27
+Release  : 28
 URL      : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-1.003.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libl/liblog-dispatch-array-perl/liblog-dispatch-array-perl_1.003-1.debian.tar.xz
